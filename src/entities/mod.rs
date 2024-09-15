@@ -2,4 +2,5 @@
 
 pub mod prelude;
 
+pub mod paginated_todo;
 pub mod todo;
