@@ -1,14 +1,17 @@
+mod cors;
 mod entities;
 mod error_responder;
 mod setup;
 mod todos;
-mod cors;
 
 use rocket::*;
 
-use crate::setup::setup_db;
-use todos::todo_routes::get_all_todos;
 use crate::cors::Cors;
+use crate::setup::setup_db;
+use todos::todo_routes::{
+    create_new_todo, delete_existing_todo, edit_todo_task_name, get_all_todos, get_todo_by_id,
+    toggle_todo_done_status,
+};
 
 #[launch] // The "main" function of the program
 async fn rocket() -> _ {
@@ -21,7 +24,17 @@ async fn rocket() -> _ {
         .manage(db_conn)
         .attach(Cors)
         .mount("/", routes![health])
-        .mount("/todos", routes![get_all_todos])
+        .mount(
+            "/todos",
+            routes![
+                create_new_todo,
+                delete_existing_todo,
+                edit_todo_task_name,
+                get_all_todos,
+                get_todo_by_id,
+                toggle_todo_done_status,
+            ],
+        )
 }
 
 #[get("/health")]

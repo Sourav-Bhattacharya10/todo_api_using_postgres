@@ -1,0 +1,662 @@
+{
+	"info": {
+		"_postman_id": "360ae9d1-4d6f-4351-86ab-f059bffe5438",
+		"name": "Todo_API_Using_Postgres_In_Rust",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10966200"
+	},
+	"item": [
+		{
+			"name": "Get All Todos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/todos?page=1&page_size=2",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"todos"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "page_size",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get All Todos Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/todos?page=1&page_size=2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todos"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "page_size",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json"
+						},
+						{
+							"key": "server",
+							"value": "Rocket"
+						},
+						{
+							"key": "x-content-type-options",
+							"value": "nosniff"
+						},
+						{
+							"key": "x-frame-options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "permissions-policy",
+							"value": "interest-cohort=()"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "POST, GET, PATCH, OPTIONS"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "content-length",
+							"value": "184"
+						},
+						{
+							"key": "date",
+							"value": "Sun, 22 Sep 2024 09:23:21 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"todos\": [\n        {\n            \"id\": 1,\n            \"taskName\": \"Wash Clothes\",\n            \"doneStatus\": true\n        },\n        {\n            \"id\": 2,\n            \"taskName\": \"Buy Mangoes\",\n            \"doneStatus\": true\n        }\n    ],\n    \"page\": 1,\n    \"pageSize\": 2,\n    \"totalPages\": 3,\n    \"totalRecords\": 5,\n    \"order\": \"asc\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Todo By ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/todos/2",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"todos",
+						"2"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get Todo By ID Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/todos/2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todos",
+								"2"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json"
+						},
+						{
+							"key": "server",
+							"value": "Rocket"
+						},
+						{
+							"key": "x-content-type-options",
+							"value": "nosniff"
+						},
+						{
+							"key": "x-frame-options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "permissions-policy",
+							"value": "interest-cohort=()"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "POST, GET, PATCH, OPTIONS"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "content-length",
+							"value": "51"
+						},
+						{
+							"key": "date",
+							"value": "Sun, 22 Sep 2024 09:23:37 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 2,\n    \"taskName\": \"Buy Mangoes\",\n    \"doneStatus\": true\n}"
+				},
+				{
+					"name": "Get Todo By ID Failure",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/todos/8",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todos",
+								"8"
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json"
+						},
+						{
+							"key": "server",
+							"value": "Rocket"
+						},
+						{
+							"key": "x-frame-options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "permissions-policy",
+							"value": "interest-cohort=()"
+						},
+						{
+							"key": "x-content-type-options",
+							"value": "nosniff"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "POST, GET, PATCH, OPTIONS"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "content-length",
+							"value": "23"
+						},
+						{
+							"key": "date",
+							"value": "Sun, 22 Sep 2024 09:34:33 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "No todo found with id 8"
+				}
+			]
+		},
+		{
+			"name": "Create New Todo",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"taskName\": \"Test Task\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/todos",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Create New Todo Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"taskName\": \"Test Task\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/todos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todos"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json"
+						},
+						{
+							"key": "server",
+							"value": "Rocket"
+						},
+						{
+							"key": "x-content-type-options",
+							"value": "nosniff"
+						},
+						{
+							"key": "permissions-policy",
+							"value": "interest-cohort=()"
+						},
+						{
+							"key": "x-frame-options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "POST, GET, PATCH, OPTIONS"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "content-length",
+							"value": "50"
+						},
+						{
+							"key": "date",
+							"value": "Sun, 22 Sep 2024 11:01:14 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 8,\n    \"taskName\": \"Test Task\",\n    \"doneStatus\": false\n}"
+				}
+			]
+		},
+		{
+			"name": "Edit Todo Task Name",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"taskName\": \"Make Dessert\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/todos/7",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"todos",
+						"7"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Edit Todo Task Name Success",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"taskName\": \"Make Dessert\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/todos/7",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todos",
+								"7"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json"
+						},
+						{
+							"key": "server",
+							"value": "Rocket"
+						},
+						{
+							"key": "x-content-type-options",
+							"value": "nosniff"
+						},
+						{
+							"key": "permissions-policy",
+							"value": "interest-cohort=()"
+						},
+						{
+							"key": "x-frame-options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "POST, GET, PATCH, OPTIONS"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "content-length",
+							"value": "53"
+						},
+						{
+							"key": "date",
+							"value": "Sun, 22 Sep 2024 10:58:43 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 7,\n    \"taskName\": \"Make Dessert\",\n    \"doneStatus\": false\n}"
+				}
+			]
+		},
+		{
+			"name": "Toggle Todo Done Status",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/todos/7",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"todos",
+						"7"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Toggle Todo Done Status",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/todos/7",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todos",
+								"7"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json"
+						},
+						{
+							"key": "server",
+							"value": "Rocket"
+						},
+						{
+							"key": "x-content-type-options",
+							"value": "nosniff"
+						},
+						{
+							"key": "permissions-policy",
+							"value": "interest-cohort=()"
+						},
+						{
+							"key": "x-frame-options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "POST, GET, PATCH, OPTIONS"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "content-length",
+							"value": "52"
+						},
+						{
+							"key": "date",
+							"value": "Sun, 22 Sep 2024 11:00:19 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 7,\n    \"taskName\": \"Make Dessert\",\n    \"doneStatus\": true\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete Existing Todo",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/todos/8",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"todos",
+						"8"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete Existing Todo",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/todos/8",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"todos",
+								"8"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "server",
+							"value": "Rocket"
+						},
+						{
+							"key": "x-content-type-options",
+							"value": "nosniff"
+						},
+						{
+							"key": "permissions-policy",
+							"value": "interest-cohort=()"
+						},
+						{
+							"key": "x-frame-options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "access-control-allow-origin",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-methods",
+							"value": "POST, GET, PATCH, OPTIONS"
+						},
+						{
+							"key": "access-control-allow-headers",
+							"value": "*"
+						},
+						{
+							"key": "access-control-allow-credentials",
+							"value": "true"
+						},
+						{
+							"key": "content-length",
+							"value": "0"
+						},
+						{
+							"key": "date",
+							"value": "Sun, 22 Sep 2024 11:03:14 GMT"
+						}
+					],
+					"cookie": [],
+					"body": null
+				}
+			]
+		}
+	]
+}
