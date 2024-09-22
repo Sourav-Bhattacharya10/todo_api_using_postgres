@@ -4,10 +4,12 @@ mod error_responder;
 mod setup;
 mod todos;
 
+use rocket::http::Status;
 use rocket::*;
 
-use crate::cors::Cors;
-use crate::setup::setup_db;
+use cors::Cors;
+use error_responder::ErrorResponder;
+use setup::setup_db;
 use todos::todo_routes::{
     create_new_todo, delete_existing_todo, edit_todo_task_name, get_all_todos, get_todo_by_id,
     toggle_todo_done_status,
@@ -38,6 +40,12 @@ async fn rocket() -> _ {
 }
 
 #[get("/health")]
-async fn health() -> &'static str {
-    "OK Hello World"
+async fn health() -> Result<(Status, &'static str), ErrorResponder> {
+    let db_conn = setup_db().await;
+
+    Ok(if db_conn.is_ok() {
+        (Status::Ok, "Application and Database are up and running")
+    } else {
+        return Err(format!("Unable to connect to database").into());
+    })
 }
