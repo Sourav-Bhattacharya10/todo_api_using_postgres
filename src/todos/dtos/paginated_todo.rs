@@ -1,10 +1,10 @@
 use serde::{Deserialize, Serialize};
 
-use super::todo;
+use super::todo_dto::TodoDto;
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct PaginatedTodo {
-    pub todos: Vec<todo::Model>,
+    pub todos: Vec<TodoDto>,
     pub page: u64,
     #[serde(rename = "pageSize")]
     pub page_size: u64,

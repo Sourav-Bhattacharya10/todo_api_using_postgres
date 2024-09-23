@@ -5,11 +5,11 @@ use sea_orm::sea_query::extension::postgres::PgExpr;
 use sea_orm::{sea_query::Expr, DatabaseConnection, EntityTrait, PaginatorTrait, QueryFilter};
 use sea_orm::{ActiveModelTrait, ActiveValue, ColumnTrait, ModelTrait, QueryOrder, QueryTrait};
 
-use crate::entities::paginated_todo::PaginatedTodo;
 use crate::entities::prelude::Todo;
 use crate::entities::todo;
 use crate::error_responder::ErrorResponder;
 
+use super::dtos::paginated_todo::PaginatedTodo;
 use super::dtos::todo_task::TodoTask;
 
 #[get("/?<term>&<done_status>&<page>&<page_size>")]
@@ -35,8 +35,10 @@ pub async fn get_all_todos(
     let todos = todo_pages.fetch_page(page - 1).await?;
     let todos_nums_pages = todo_pages.num_items_and_pages().await?;
 
+    let todo_dtos = todos.iter().map(|todo| todo.into()).collect();
+
     let paged_todo = PaginatedTodo {
-        todos,
+        todos: todo_dtos,
         page,
         page_size,
         total_records: todos_nums_pages.number_of_items,
