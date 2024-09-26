@@ -3,4 +3,15 @@ name = "todo_api_using_postgres"
 version = "0.1.0"
 edition = "2021"
 
+[workspace]
+members = ["."]
+
 [dependencies]
+serde = { version = "1.0.207", features = ["derive"] }
+sea-orm = { version = "1.0.0-rc.5", features = [
+    "sqlx-postgres",
+    "runtime-tokio-rustls",
+    "macros",
+] }
+rocket = { version = "0.5.1", features = ["json"] }
+dotenv = "0.15.0"
