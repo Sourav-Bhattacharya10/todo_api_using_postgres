@@ -1,14 +1,17 @@
-// mod cors;
 mod entities;
 mod error_responder;
 mod params;
 mod setup;
 mod todos;
 
-use axum::{http::StatusCode, routing::get, Router};
+use axum::{
+    http::{Method, StatusCode},
+    routing::get,
+    Router,
+};
 use sea_orm::{DbErr, RuntimeErr};
+use tower_http::cors::{Any, CorsLayer};
 
-// use cors::Cors;
 use error_responder::ErrorResponder;
 use setup::setup_db;
 use todos::todo_routes::get_todo_router;
@@ -26,6 +29,12 @@ async fn main() {
     let app = Router::new()
         .merge(health_router)
         .merge(todo_router)
+        .layer(
+            CorsLayer::new()
+                .allow_origin(Any)
+                .allow_methods([Method::GET, Method::POST, Method::OPTIONS, Method::PATCH])
+                .allow_headers(Any),
+        )
         .with_state(db_conn);
 
     let port = "8000";
