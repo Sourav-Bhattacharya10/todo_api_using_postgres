@@ -3,6 +3,8 @@
 use sea_orm::entity::prelude::*;
 use serde::{Deserialize, Serialize};
 
+use crate::todos::dtos::todo_dto::TodoDto;
+
 #[derive(Clone, Debug, PartialEq, DeriveEntityModel, Eq, Serialize, Deserialize)]
 #[sea_orm(table_name = "todo")]
 pub struct Model {
@@ -19,3 +21,13 @@ pub struct Model {
 pub enum Relation {}
 
 impl ActiveModelBehavior for ActiveModel {}
+
+impl Into<TodoDto> for Model {
+    fn into(self) -> TodoDto {
+        TodoDto {
+            task_id: self.task_id,
+            task_name: self.task_name,
+            done_status: self.done_status,
+        }
+    }
+}

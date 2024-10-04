@@ -1,51 +1,51 @@
-mod cors;
+// mod cors;
 mod entities;
 mod error_responder;
+mod params;
 mod setup;
 mod todos;
 
-use rocket::http::Status;
-use rocket::*;
+use axum::{http::StatusCode, routing::get, Router};
+use sea_orm::{DbErr, RuntimeErr};
 
-use cors::Cors;
+// use cors::Cors;
 use error_responder::ErrorResponder;
 use setup::setup_db;
-use todos::todo_routes::{
-    create_new_todo, delete_existing_todo, edit_todo_task_name, get_all_todos, get_todo_by_id,
-    toggle_todo_done_status,
-};
+use todos::todo_routes::get_todo_router;
 
-#[launch] // The "main" function of the program
-async fn rocket() -> _ {
+#[tokio::main] // The "main" function of the program
+async fn main() {
     let db_conn = match setup_db().await {
         Ok(db) => db,
         Err(err) => panic!("{}", err),
     };
 
-    rocket::build()
-        .manage(db_conn)
-        .attach(Cors)
-        .mount("/", routes![health])
-        .mount(
-            "/todos",
-            routes![
-                create_new_todo,
-                delete_existing_todo,
-                edit_todo_task_name,
-                get_all_todos,
-                get_todo_by_id,
-                toggle_todo_done_status,
-            ],
-        )
+    let health_router = Router::new().route("/health", get(health));
+    let todo_router = get_todo_router();
+
+    let app = Router::new()
+        .merge(health_router)
+        .merge(todo_router)
+        .with_state(db_conn);
+
+    let port = "8000";
+    println!("Server started running on http://localhost:{port}");
+    let address = format!("0.0.0.0:{}", port);
+    let listener = tokio::net::TcpListener::bind(address).await.unwrap();
+    axum::serve(listener, app).await.unwrap();
 }
 
-#[get("/health")]
-async fn health() -> Result<(Status, &'static str), ErrorResponder> {
+async fn health() -> Result<(StatusCode, &'static str), ErrorResponder> {
     let db_conn = setup_db().await;
 
     Ok(if db_conn.is_ok() {
-        (Status::Ok, "Application and Database are up and running")
+        (
+            StatusCode::OK,
+            "Application and Database are up and running",
+        )
     } else {
-        return Err(format!("Unable to connect to database").into());
+        return Err(ErrorResponder::DatabaseError(DbErr::Conn(
+            RuntimeErr::Internal(String::from("Unable to connect to database")),
+        )));
     })
 }

@@ -1,30 +1,33 @@
-use rocket::Responder;
+use axum::{
+    http::StatusCode,
+    response::{IntoResponse, Response},
+};
 use sea_orm::DbErr;
 
-#[derive(Responder, Debug)]
-#[response(status = 500, content_type = "json")]
-pub struct ErrorResponder {
-    message: String,
+// Define a custom error type
+#[derive(Debug)]
+pub enum ErrorResponder {
+    DatabaseError(DbErr),
+}
+
+// Implement IntoResponse for your custom error type
+impl IntoResponse for ErrorResponder {
+    fn into_response(self) -> Response {
+        match self {
+            ErrorResponder::DatabaseError(err) => {
+                // Map all other DbErr types to 500 Internal Server Error
+                (
+                    StatusCode::INTERNAL_SERVER_ERROR,
+                    format!("Internal server error {err}"),
+                )
+                    .into_response()
+            }
+        }
+    }
 }
 
 impl From<DbErr> for ErrorResponder {
-    fn from(err: DbErr) -> Self {
-        Self {
-            message: err.to_string(),
-        }
-    }
-}
-
-impl From<String> for ErrorResponder {
-    fn from(string: String) -> Self {
-        Self { message: string }
-    }
-}
-
-impl From<&str> for ErrorResponder {
-    fn from(str: &str) -> Self {
-        Self {
-            message: str.to_owned().into(),
-        }
+    fn from(value: DbErr) -> Self {
+        Self::DatabaseError(value)
     }
 }
